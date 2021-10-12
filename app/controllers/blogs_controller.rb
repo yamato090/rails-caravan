@@ -12,12 +12,14 @@ class BlogsController < ApplicationController
   end
   
   def create
-    blog = Blog.new(blog_params)
-    blog.save
-    # 以下の行を修正
-    redirect_to blog_path(blog.id)
+    @blog = Blog.new(blog_params)
+    if @blog.save
+      redirect_to blog_path(@blog.id)
+    else
+      render :new
+    end
   end
-
+  
   def edit
     @blog = Blog.find(params[:id])
   end
